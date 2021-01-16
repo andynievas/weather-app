@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+    <h1 id="title" >The weather</h1>
+
+    <div class="contenedor" >
+
+        <div id="clima-name" ></div>
+
+        <div id="clima"></div>
+
+        <!-- <div class="scroll" >
+            <h3>Scrollable div</h3>
+            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Atque nisi veniam obcaecati fugit? Doloribus mollitia placeat molestias asperiores nihil dolores ex. Reiciendis, ratione facere saepe aliquid rem excepturi fugiat aliquam in ad ullam. Quibusdam repudiandae adipisci nam itaque id sint obcaecati perspiciatis, provident aliquid. Harum totam ullam asperiores perferendis rem autem reiciendis quae magni quod! Culpa, est, quis corrupti distinctio inventore in ad soluta sunt, repellendus aperiam unde! Ullam perferendis modi consequatur vero at fugit esse autem, est explicabo quibusdam eos. Adipisci ex corrupti hic. Eos blanditiis molestias doloribus eligendi quidem ducimus, id ipsum ipsam illum voluptatibus voluptatum necessitatibus pariatur?</p>
+            <img src="https://thispersondoesnotexist.com/image" style="width: 100%;" alt="">
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptas ab sunt ullam et! Esse, nesciunt voluptatum, laborum eius modi asperiores molestiae alias rem aspernatur sed obcaecati tempore minima eligendi sint voluptates in voluptatem! Voluptatibus, repudiandae tenetur. Voluptatum eveniet nostrum cum molestiae rerum velit, ex distinctio, earum tenetur itaque maxime voluptatem. Natus, aspernatur consequuntur pariatur libero ratione dolorem. Hic ea iure sunt, rem iste doloribus ab atque numquam beatae iusto dolorem excepturi, quasi totam. Corrupti eum magni voluptatibus praesentium harum, inventore placeat ad alias iste quaerat ex architecto molestias iusto eligendi nam distinctio doloremque exercitationem assumenda. Ad tempora possimus unde impedit expedita corrupti beatae odio velit. Quisquam harum unde suscipit amet expedita aperiam inventore enim cumque, perspiciatis aliquid commodi ducimus explicabo tenetur repellendus modi quia officia placeat a sunt? Dolor voluptatum optio nisi quod voluptates porro quia sequi, consequuntur numquam nesciunt officia dicta, labore excepturi debitis cupiditate. Sunt labore omnis eaque voluptates, quidem ipsum soluta? Soluta, perspiciatis. Laudantium ipsum deserunt doloribus dolor harum commodi dolorem, molestias, expedita non ab odio enim doloremque modi inventore exercitationem laboriosam quos excepturi officiis alias, quod praesentium. Fugit, officiis ullam et unde dolor assumenda? Praesentium natus quas sequi hic, sint voluptate iure voluptatibus facilis consequatur sapiente?</p>
+        </div> -->
+
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        const id_Paysandu = '3441243';
+
+        const currentWeather = 'http://api.openweathermap.org/data/2.5/weather?id=';
+
+        const apiKey = '&appid=4861e69b50e0de91ca3e8d86c80cd079';
+
+        function addHtml (tag, data){
+            let htmlElement = document.createElement(tag);
+            htmlElement.classList.add('mini-section-weather')
+            let child = document.createTextNode( data.name + ': ' + (data.info) );
+            htmlElement.appendChild(child);
+            document.getElementById('clima').appendChild(htmlElement);
+        }
+
+        const clima =
+        fetch( currentWeather + id_Paysandu + apiKey)
+        .then(response => response.json() )
+        .then(data => {
+            console.log(data);
+
+            // Ciudad title
+            let htmlElement = document.createElement('h4');
+            let child = document.createTextNode( 'Ciudad: ' + data.name );
+            htmlElement.appendChild(child);
+            document.getElementById('clima-name').appendChild(htmlElement);
+            
+            // Data
+
+            // example with function
+            addHtml('p', {
+                name: 'Temperatura',
+                info: parseInt(data.main.temp - 273.15) + '°'
+            });
+
+            addHtml('p', {
+                name: 'Humedad',
+                info: data.main.humidity + ' %'
+            });
+
+            addHtml('p', {
+                name: 'Probabilidad de lluvia',
+                info: data.rain['1h'] + ' %'
+            });
+
+            addHtml('p', {
+                name: 'Weather',
+                info: data.weather[0].description
+            });
+
+        });
+
+        // document.getElementById("clima").innerHTML = clima.list.map();
+
+        // clima.list.map( element => { console.log(element) } );
+
+    </script>
+</body>
+</html>
